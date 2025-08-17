@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RevOps Archetype Quiz + Playful Roast • CRM Hacker</title>
+<meta name="description" content="What kind of RevOps pro are you? Take the 90-second quiz. Paste your own LinkedIn blurb to get a customized (consensual!) roast and a mini plan.">
+<link rel="preconnect" href="https://static.wixstatic.com">
+<style>
+:root{
+  --bg:#F7FAFF; --ink:#0F1B2A; --muted:#5E6B7A; --brand:#176BFF; --mint:#00C2A8; --line:rgba(0,0,0,.08);
+  --shadow:0 16px 40px rgba(15,27,42,.08); --card:#FFFFFF; --chip:#E9F1FF; --pill:#EFFFFA;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--brand);text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:22px}
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:36px;width:auto;border-radius:6px}
+.nav .right a{margin-left:16px;font-weight:700}
+.hero{
+  position:relative;isolation:isolate;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.86)),
+    url('https://static.wixstatic.com/media/14bfb7_9f0dc726fec947f698ffb7f5499ba9ce~mv2.jpg/v1/fill/w_1600,h_1000,al_c,q_85,usm_0.66_1.00_0.01/crm-stars-bg.jpg');
+  background-size:cover;background-position:center;border-bottom:1px solid var(--line)
+}
+.hero .wrap{padding:74px 22px 40px}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--line);color:#0A3AA5;font-weight:800}
+h1{font-size:44px;line-height:1.06;margin:10px 0 10px}
+.lead{font-size:18px;color:var(--muted);max-width:760px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.btn{padding:12px 18px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--brand),#5AA2FF);color:#fff;font-weight:900;cursor:pointer}
+.btn.secondary{background:#fff;color:var(--brand);border:1px solid var(--line)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(23,107,255,.25)}
+.grid{display:grid;gap:20px}
+.cols-2{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px}
+.section{margin:28px 0}
+.small{font-size:14px;color:var(--muted)}
+.pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--pill);border:1px solid var(--line);color:#0D7F70;font-weight:800}
+.tile{padding:16px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#fff}
+.opt{display:flex;gap:10px;align-items:flex-start;margin:8px 0}
+.opt input{width:auto}
+.result{border-left:4px solid var(--mint);padding-left:14px;background:#F6FFFC;border:1px solid var(--line);border-radius:12px;margin-top:12px}
+textarea,input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:15px}
+label{font-weight:700;margin-bottom:6px;display:block}
+.video{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:980px){ .cols-2{grid-template-columns:1fr} h1{font-size:36px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <img alt="CRM Hacker logo" src="https://static.wixstatic.com/media/14bfb7_277acdfd50f948648ab6aac9811dd039~mv2.png/v1/fill/w_206,h_156,al_c,q_85,usm_0.66_1.00_0.01/CRM%20(1)_edited.png">
+      <strong>CRM Hacker</strong>
+    </div>
+    <div class="right">
+      <a href="index.html">Services</a>
+      <a href="jonathan-story.html">Founder Story</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Quiz • RevOps • Salesforce</span>
+    <h1>What kind of RevOps pro are you?</h1>
+    <p class="lead">90-second quiz → archetype, playful (consensual) roast, and a mini plan. Paste your own LinkedIn blurb for extra spice. Results on page + emailed to you.</p>
+    <div class="ctas">
+      <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Start the quiz</button>
+      <button class="btn secondary" onclick="document.getElementById('about-data').scrollIntoView({behavior:'smooth'})">How we use your data</button>
+    </div>
+  </div>
+</header>
+
+<main class=
