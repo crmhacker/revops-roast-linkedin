@@ -84,4 +84,316 @@ label{font-weight:700;margin-bottom:6px;display:block}
   </div>
 </header>
 
-<main class=
+<main class="wrap">
+
+  <!-- QUIZ + SELF-PROVIDED LINKEDIN TEXT -->
+  <section id="quiz" class="section grid cols-2">
+    <div class="card">
+      <h2>Your details (optional but boosts accuracy)</h2>
+      <div class="tile">
+        <label for="liUrl">LinkedIn profile URL (optional)</label>
+        <input id="liUrl" placeholder="https://www.linkedin.com/in/your-name" />
+        <small class="small">We won’t crawl LinkedIn. If you want us to tailor your roast, paste your own summary below.</small>
+      </div>
+      <div class="tile">
+        <label for="liSummary">Paste your LinkedIn “About” or bio (optional)</label>
+        <textarea id="liSummary" rows="5" placeholder="Paste your About summary here…"></textarea>
+      </div>
+      <div class="tile">
+        <label for="liPosts">Paste 3–5 recent post snippets (optional)</label>
+        <textarea id="liPosts" rows="5" placeholder="• Post 1…
+• Post 2…
+• Post 3…"></textarea>
+      </div>
+      <div class="tile">
+        <label>Spice level</label>
+        <select id="spice">
+          <option value="mild">Mild (grandma’s watching)</option>
+          <option value="medium">Medium (friendly ribbing)</option>
+          <option value="spicy">Spicy (still kind, but ouch)</option>
+        </select>
+      </div>
+      <div class="tile">
+        <label><input type="checkbox" id="consent" /> I confirm I’m sharing my own text and consent to a playful roast.</label>
+        <small class="small">No scraping. No storing beyond email delivery unless you opt in below.</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>RevOps Fit Quiz (90 seconds)</h2>
+      <form id="quizForm">
+        <div class="tile">
+          <div><b>1)</b> Forecast calls feel…</div>
+          <label class="opt"><input type="radio" name="q1" value="forecast"> Philosophical debates about truth</label>
+          <label class="opt"><input type="radio" name="q1" value="handoff"> “I thought CS owned that…” — every week</label>
+          <label class="opt"><input type="radio" name="q1" value="automation"> Manual workarounds everywhere</label>
+          <label class="opt"><input type="radio" name="q1" value="data"> We don’t fully trust the data</label>
+        </div>
+        <div class="tile">
+          <div><b>2)</b> Rep complaint you hear most?</div>
+          <label class="opt"><input type="radio" name="q2" value="automation"> Too many clicks</label>
+          <label class="opt"><input type="radio" name="q2" value="handoff"> Handoffs unclear</label>
+          <label class="opt"><input type="radio" name="q2" value="data"> Dirty/missing fields</label>
+          <label class="opt"><input type="radio" name="q2" value="forecast"> Stages don’t predict</label>
+        </div>
+        <div class="tile">
+          <div><b>3)</b> Biggest lead pain?</div>
+          <label class="opt"><input type="radio" name="q3" value="handoff"> Slow routing</label>
+          <label class="opt"><input type="radio" name="q3" value="data"> Dupes/no enrichment</label>
+          <label class="opt"><input type="radio" name="q3" value="automation"> No guided next step</label>
+          <label class="opt"><input type="radio" name="q3" value="forecast"> Stuck stages</label>
+        </div>
+        <button class="btn" id="quizBtn" type="submit">See my archetype</button>
+      </form>
+      <div id="quizOut" style="display:none" class="result"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS + GATED EMAIL -->
+  <section id="results" class="section grid cols-2">
+    <div class="card">
+      <h2>Your archetype & mini plan</h2>
+      <div id="planOut" class="result" style="display:none"></div>
+      <div class="tile" id="roastOut" style="display:none"></div>
+    </div>
+
+    <div class="card" id="gate">
+      <h3>Email me the results + a downloadable plan</h3>
+      <p class="small">Enter your email to receive your archetype, roast, and a 2-step action plan (.txt). You’ll also get a 90-sec walkthrough video.</p>
+      <form id="gateForm">
+        <div style="display:grid;gap:10px">
+          <input name="name" placeholder="Full name" required />
+          <input name="email" type="email" placeholder="Work email" required />
+          <label class="small"><input type="checkbox" name="optin" /> Keep me posted on RevOps tips (monthly)</label>
+          <button class="btn" type="submit" id="gateBtn">Send my results</button>
+        </div>
+      </form>
+      <div id="gateReveal" style="display:none">
+        <div class="tile">
+          <b>90-second walkthrough</b>
+          <div class="video">
+            <iframe id="planVideo" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="Mini Plan Walkthrough"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="tile"><button class="btn secondary" id="downloadPlan" type="button">Download my plan (.txt)</button></div>
+      </div>
+      <div id="gateErr" class="small" style="display:none;color:#B3261E;margin-top:8px">❌ Something went wrong — try again.</div>
+    </div>
+  </section>
+
+  <!-- DATA NOTICE -->
+  <section id="about-data" class="section card">
+    <h3>How we use your data (plain English)</h3>
+    <ul>
+      <li>We do <b>not</b> crawl LinkedIn or social networks.</li>
+      <li>You can paste your own text (About/Posts). It stays in your browser unless you submit your email.</li>
+      <li>If you submit email, we send your results and may store content you provided to generate them (only if you opt in).</li>
+      <li>You can reply “STOP” to any email to delete your data.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="wrap" style="text-align:center;color:var(--muted);padding:30px 0;border-top:1px solid var(--line)">
+  © CRM Hacker — Salesforce RevOps
+</footer>
+
+<script>
+/* ===== Archetypes ===== */
+const ARCHETYPES = {
+  data:{ title:'Data Debris Wrangler', win:['Enrichment + dedupe at lead create','Required fields on stage change'] },
+  handoff:{ title:'Handoff Air-Traffic Controller', win:['Round-robin + clear owners','SLA alerts with auto-nudges'] },
+  automation:{ title:'Automation Sous-Chef', win:['Consolidate flows into one plate','Add “Next Step” buttons for reps'] },
+  forecast:{ title:'Forecast Meteorologist', win:['Stage hygiene gates','Dashboard tiles that actually predict'] }
+};
+
+/* ===== Helper: playful roast builder =====
+   Generates a roast from user-provided text only. No scraping. */
+function buildRoast(spice, arche, bioText, postsText){
+  const zingsMild = [
+    "You’ve got ‘pipeline whisperer’ energy — just whisper louder at your fields.",
+    "Your dashboards are pretty. Let’s make them useful before QBR karaoke.",
+    "You say ‘single source of truth’ like it’s not three spreadsheets and a prayer."
+  ];
+  const zingsMed = [
+    "Your opp stages look like a tapas menu — cute, but no one knows what to order.",
+    "Speed-to-lead is so slow, prospects could knit a sweater between MQL and contact.",
+    "Your ‘required fields’ are more like ‘suggested vibes’."
+  ];
+  const zingsSpicy = [
+    "Your routing logic was clearly designed by a raccoon with admin access.",
+    "Forecast calls are performance art — abstract, confusing, and somehow approved.",
+    "Your automations have automations. Congrats on inventing spaghetti-as-a-service."
+  ];
+  const pulls = {
+    mild:zingsMild, medium:zingsMed, spicy:zingsSpicy
+  }[spice||'mild'];
+
+  const hints = [];
+  if(bioText){
+    if(/ops|revops|operations|process/i.test(bioText)) hints.push("process-obsessed");
+    if(/salesforce|sfdc|crm/i.test(bioText)) hints.push("SFDC native");
+    if(/plg|product-led|product led/i.test(bioText)) hints.push("PLG-fluent");
+    if(/enablement|training/i.test(bioText)) hints.push("enablement enjoyer");
+  }
+  if(postsText){
+    if(/dashboard|forecast/i.test(postsText)) hints.push("dashboard poet");
+    if(/routing|sla/i.test(postsText)) hints.push("routing philosopher");
+    if(/dedupe|enrich/i.test(postsText)) hints.push("data janitor (elite)");
+  }
+  const hintLine = hints.length ? `We’re reading ${hints.slice(0,3).join(', ')} vibes.` : "We’ll learn your style as we go.";
+
+  return `
+    <h3 style="margin-top:0">Playful Roast (${spice||'mild'})</h3>
+    <p class="small" style="margin:-6px 0 8px">All in good fun — and 100% opt-in.</p>
+    <ul>
+      <li>${pulls[0]}</li>
+      <li>${pulls[1]}</li>
+      <li>${pulls[2]}</li>
+    </ul>
+    <p class="small">${hintLine}</p>
+    <p class="small">Archetype read: <b>${ARCHETYPES[arche].title}</b>.</p>
+  `;
+}
+
+/* ===== Quiz logic ===== */
+(function(){
+  const form = document.getElementById('quizForm');
+  const out = document.getElementById('quizOut');
+  if(!form) return;
+
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const fd = new FormData(form);
+    const picks = ['q1','q2','q3'].map(k=>fd.get(k)).filter(Boolean);
+    if(picks.length<3){ alert('Please answer all questions.'); return; }
+    const tally = picks.reduce((m,v)=>(m[v]=(m[v]||0)+1,m),{});
+    const top = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+    const a = ARCHETYPES[top] || ARCHETYPES.data;
+
+    out.style.display='block';
+    out.innerHTML = `
+      <div class="result">
+        <h4>Your archetype: <span style="color:#0D7F70">${a.title}</span></h4>
+        <p class="small">Best quick wins:</p>
+        <ul>${a.win.map(x=>`<li>${x}</li>`).join('')}</ul>
+        <p><a href="#results">Scroll for your mini plan + roast ↓</a></p>
+      </div>
+    `;
+
+    // also render mini plan & roast preview
+    renderPlanAndRoast(top);
+    document.getElementById('results').scrollIntoView({behavior:'smooth'});
+  });
+})();
+
+/* ===== Render Plan + Roast (from self-provided text only) ===== */
+function renderPlanAndRoast(archeKey){
+  const planEl = document.getElementById('planOut');
+  const roastEl = document.getElementById('roastOut');
+  const spice = (document.getElementById('spice')||{}).value || 'mild';
+  const consent = document.getElementById('consent').checked;
+  const bio = (document.getElementById('liSummary')||{}).value || '';
+  const posts = (document.getElementById('liPosts')||{}).value || '';
+
+  // Mini plan tailored by archetype
+  const steps = ARCHETYPES[archeKey]?.win || ARCHETYPES.data.win;
+  planEl.style.display='block';
+  planEl.innerHTML = `
+    <h3 style="margin-top:0">Your 2-step Mini Plan</h3>
+    <ol style="margin-left:18px">
+      ${steps.map(s=>`<li>${s}</li>`).join('')}
+    </ol>
+    <p class="small">We’ll prove lift in weeks, not quarters.</p>
+  `;
+
+  // Roast only if consent checked
+  roastEl.style.display = consent ? 'block' : 'none';
+  roastEl.innerHTML = consent
+    ? buildRoast(spice, archeKey, bio, posts)
+    : '<p class="small">Check the consent box above if you want the playful roast generated.</p>';
+
+  // Stash results for email gate
+  window.__revops_result__ = {
+    archetype: ARCHETYPES[archeKey].title,
+    steps, spice,
+    bio, posts,
+    roastHtml: consent ? roastEl.innerHTML : ''
+  };
+}
+
+/* ===== Gate: email results + let them download ===== */
+(function(){
+  const form = document.getElementById('gateForm');
+  const btn = document.getElementById('gateBtn');
+  const reveal = document.getElementById('gateReveal');
+  const video = document.getElementById('planVideo');
+  const err = document.getElementById('gateErr');
+  if(!form) return;
+
+  // TODO: add your real endpoint
+  const FORM_ENDPOINT = ""; // e.g., "https://formspree.io/f/xxxxabcd"
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault(); err.style.display='none'; btn.disabled=true;
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const result = window.__revops_result__ || null;
+
+    // Local demo stash
+    try{
+      const stash = JSON.parse(localStorage.getItem('crm_hacker_revops_quiz')||'[]');
+      stash.push({ ts:Date.now(), payload, result });
+      localStorage.setItem('crm_hacker_revops_quiz', JSON.stringify(stash));
+    }catch(_){}
+
+    if(FORM_ENDPOINT){
+      try{
+        const fd = new FormData();
+        fd.set('name', payload.name||'');
+        fd.set('email', payload.email||'');
+        fd.set('archetype', result?.archetype || '');
+        fd.set('steps', (result?.steps||[]).join(' | '));
+        fd.set('spice', result?.spice || 'mild');
+        fd.set('bio', result?.bio || '');
+        fd.set('posts', result?.posts || '');
+        fd.set('roast', result?.roastHtml || '');
+        const res = await fetch(FORM_ENDPOINT, { method:'POST', body:fd, headers:{'Accept':'application/json'} });
+        if(!res.ok) throw new Error('bad');
+      }catch(ex){ err.style.display='block'; }
+    }
+
+    // Optional: switch video per archetype
+    const ids = { data:'dQw4w9WgXcQ', handoff:'oHg5SJYRHA0', automation:'dQw4w9WgXcQ', forecast:'oHg5SJYRHA0' };
+    const key = Object.keys(ARCHETYPES).find(k => ARCHETYPES[k].title === (result?.archetype)) || 'data';
+    video.src = `https://www.youtube.com/embed/${ids[key]}?rel=0`;
+
+    reveal.style.display='block';
+    btn.disabled=false;
+
+    // Download handler
+    document.getElementById('downloadPlan')?.addEventListener('click', ()=>{
+      const lines = [
+        `CRM Hacker — RevOps Archetype: ${result?.archetype||'Unknown'}`,
+        ``,
+        `2-Step Mini Plan:`,
+        ...(result?.steps||[]).map(s=>`- ${s}`),
+        ``,
+        `Spice level: ${result?.spice||'mild'}`,
+        `LinkedIn Bio (provided):`,
+        (result?.bio||'(none)'),
+        ``,
+        `Post snippets (provided):`,
+        (result?.posts||'(none)'),
+      ];
+      const blob = new Blob([lines.join('\n')],{type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='CRMHacker-RevOps-Results.txt';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  });
+})();
+</script>
+</body>
+</html>
