@@ -7,7 +7,7 @@
 <meta http-equiv="Expires" content="0" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RevOps Roast + Archetype • CRM Hacker</title>
-<meta name="description" content="What kind of RevOps pro are you? Paste your LinkedIn blurb (with consent), get a playful roast + mini plan. Results on page and emailed.">
+<meta name="description" content="Two paths: 90s RevOps Archetype Quiz, or a playful (consensual) Roast based on your pasted LinkedIn bio/posts. Results shown instantly and emailed to you.">
 <link rel="preconnect" href="https://static.wixstatic.com">
 <style>
 :root{
@@ -33,7 +33,7 @@ a{color:var(--brand);text-decoration:none}
 .hero .wrap{padding:74px 22px 40px}
 .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--line);color:#0A3AA5;font-weight:800}
 h1{font-size:44px;line-height:1.06;margin:10px 0 10px}
-.lead{font-size:18px;color:var(--muted);max-width:820px}
+.lead{font-size:18px;color:var(--muted);max-width:860px}
 .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .btn{padding:12px 18px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--brand),#5AA2FF);color:#fff;font-weight:900;cursor:pointer}
 .btn.secondary{background:#fff;color:var(--brand);border:1px solid var(--line)}
@@ -66,8 +66,8 @@ label{font-weight:700;margin-bottom:6px;display:block}
       <strong>CRM Hacker</strong>
     </div>
     <div class="right">
-      <a href="#quiz">Quiz</a>
-      <a href="#results">Results</a>
+      <a href="#quiz">Archetype Quiz</a>
+      <a href="#roast">Get Roasted</a>
       <a href="#data">Data & Consent</a>
     </div>
   </div>
@@ -76,51 +76,20 @@ label{font-weight:700;margin-bottom:6px;display:block}
 <!-- HERO -->
 <header class="hero">
   <div class="wrap">
-    <span class="tag">Quiz • RevOps • Salesforce</span>
-    <h1>RevOps Roast + Archetype (with consent)</h1>
-    <p class="lead">Take the 90-second quiz, paste your LinkedIn “About” + a few post snippets, choose your spice level, and get a playful roast + 2-step mini plan. Results show instantly and can be emailed to you.</p>
+    <span class="tag">Two paths • Pick yours</span>
+    <h1>RevOps Archetype or Playful Roast</h1>
+    <p class="lead">Choose your adventure: a 90-second quiz that nails your RevOps archetype and mini plan — or a consensual, funny roast based on the LinkedIn text you paste. Both can be emailed to you.</p>
     <div class="ctas">
-      <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Start the quiz</button>
-      <button class="btn secondary" onclick="document.getElementById('data').scrollIntoView({behavior:'smooth'})">How we use your data</button>
+      <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Take the Archetype Quiz</button>
+      <button class="btn secondary" onclick="document.getElementById('roast').scrollIntoView({behavior:'smooth'})">Get Roasted</button>
     </div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- QUIZ + LINKEDIN INPUT + REQUIRED CONSENT -->
+  <!-- ========== QUIZ (SEPARATE) ========== -->
   <section id="quiz" class="section grid cols-2">
-    <div class="card">
-      <h2>Your details</h2>
-      <div class="tile">
-        <label for="liUrl">LinkedIn profile URL (optional)</label>
-        <input id="liUrl" placeholder="https://www.linkedin.com/in/your-name" />
-        <small class="small">This is for context only. We won’t crawl LinkedIn from the browser.</small>
-      </div>
-      <div class="tile">
-        <label for="liSummary">Paste your LinkedIn “About” (recommended)</label>
-        <textarea id="liSummary" rows="5" placeholder="Paste your About summary here…"></textarea>
-      </div>
-      <div class="tile">
-        <label for="liPosts">Paste 3–5 recent post snippets (optional)</label>
-        <textarea id="liPosts" rows="5" placeholder="• Post 1…
-• Post 2…
-• Post 3…"></textarea>
-      </div>
-      <div class="tile">
-        <label>Spice level</label>
-        <select id="spice">
-          <option value="mild">Mild (grandma’s watching)</option>
-          <option value="medium">Medium (friendly ribbing)</option>
-          <option value="spicy">Spicy (still kind, but ouch)</option>
-        </select>
-      </div>
-      <div class="tile notice">
-        <label><input type="checkbox" id="consent" /> I consent to CRM Hacker using the text I pasted (and the LinkedIn URL I provided) to generate my archetype, roast, and plan.</label>
-        <small class="small">No scraping. If/when we add LinkedIn Sign-In, it will be via explicit OAuth with only permitted fields.</small>
-      </div>
-    </div>
-
     <div class="card">
       <h2>RevOps Fit Quiz (90 seconds)</h2>
       <form id="quizForm">
@@ -149,39 +118,87 @@ label{font-weight:700;margin-bottom:6px;display:block}
       </form>
       <div id="quizOut" style="display:none" class="result"></div>
     </div>
-  </section>
 
-  <!-- RESULTS -->
-  <section id="results" class="section grid cols-2">
     <div class="card">
       <h2>Your archetype & mini plan</h2>
       <div id="planOut" class="result" style="display:none"></div>
-      <div class="tile" id="roastOut" style="display:none"></div>
+
+      <!-- QUIZ EMAIL GATE (separate) -->
+      <div class="tile" id="quizGate">
+        <h3>Email me my archetype + plan</h3>
+        <form id="quizGateForm">
+          <div style="display:grid;gap:10px">
+            <input name="name" placeholder="Full name" required />
+            <input name="email" type="email" placeholder="Work email" required />
+            <label class="small"><input type="checkbox" name="optin" /> Send me monthly RevOps tips</label>
+            <button class="btn" type="submit" id="quizGateBtn">Send</button>
+          </div>
+        </form>
+        <div id="quizGateOk" class="small" style="display:none;margin-top:8px;color:#0D7F70">✅ Sent!</div>
+        <div id="quizGateErr" class="small" style="display:none;margin-top:8px;color:#B3261E">❌ Try again.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ROAST (SEPARATE) ========== -->
+  <section id="roast" class="section grid cols-2">
+    <div class="card">
+      <h2>Get Roasted (playful & consensual)</h2>
+      <div class="tile">
+        <label for="liUrl">LinkedIn profile URL (optional)</label>
+        <input id="liUrl" placeholder="https://www.linkedin.com/in/your-name" />
+        <small class="small">We won’t crawl LinkedIn from the browser. Paste text below for personalization.</small>
+      </div>
+      <div class="tile">
+        <label for="liSummary">Paste your LinkedIn “About” (recommended)</label>
+        <textarea id="liSummary" rows="5" placeholder="Paste your About summary here…"></textarea>
+      </div>
+      <div class="tile">
+        <label for="liPosts">Paste 3–5 recent post snippets (optional)</label>
+        <textarea id="liPosts" rows="5" placeholder="• Post 1…
+• Post 2…
+• Post 3…"></textarea>
+      </div>
+      <div class="tile">
+        <label>Spice level</label>
+        <select id="spice">
+          <option value="mild">Mild (grandma’s watching)</option>
+          <option value="medium">Medium (friendly ribbing)</option>
+          <option value="spicy">Spicy (still kind, but ouch)</option>
+        </select>
+      </div>
+      <div class="tile notice">
+        <label><input type="checkbox" id="consent" /> I consent to CRM Hacker using the text I pasted (and the LinkedIn URL I provided) to generate my roast.</label>
+        <small class="small">No scraping. Optional future: LinkedIn OAuth with permitted fields.</small>
+      </div>
+      <button class="btn" id="roastBtn" type="button">Generate my roast</button>
     </div>
 
-    <!-- EMAIL GATE -->
-    <div class="card" id="gate">
-      <h3>Email me the results + a downloadable plan</h3>
-      <p class="small">Enter your email to receive your archetype, roast, and a 2-step action plan (.txt). You’ll also get a 90-sec walkthrough video.</p>
-      <form id="gateForm">
-        <div style="display:grid;gap:10px">
-          <input name="name" placeholder="Full name" required />
-          <input name="email" type="email" placeholder="Work email" required />
-          <label class="small"><input type="checkbox" name="optin" /> Keep me posted on RevOps tips (monthly)</label>
-          <button class="btn" type="submit" id="gateBtn">Send my results</button>
-        </div>
-      </form>
-      <div id="gateReveal" style="display:none">
-        <div class="tile">
-          <b>90-second walkthrough</b>
-          <div class="video">
-            <iframe id="planVideo" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="Mini Plan Walkthrough"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="card">
+      <h2>Your roast</h2>
+      <div id="roastOut" class="tile" style="display:none"></div>
+
+      <!-- ROAST EMAIL GATE (separate) -->
+      <div class="tile" id="roastGate" style="display:none">
+        <h3>Email me my roast + 2-step plan</h3>
+        <form id="roastGateForm">
+          <div style="display:grid;gap:10px">
+            <input name="name" placeholder="Full name" required />
+            <input name="email" type="email" placeholder="Work email" required />
+            <label class="small"><input type="checkbox" name="optin" /> Send me monthly RevOps tips</label>
+            <button class="btn" type="submit" id="roastGateBtn">Send</button>
           </div>
+        </form>
+        <div class="video" style="margin-top:12px">
+          <iframe id="roastVideo" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="Mini Plan Walkthrough"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <div class="tile"><button class="btn secondary" id="downloadPlan" type="button">Download my plan (.txt)</button></div>
+        <div style="margin-top:10px">
+          <button class="btn secondary" id="downloadRoast" type="button">Download my roast (.txt)</button>
+        </div>
+        <div id="roastGateOk" class="small" style="display:none;margin-top:8px;color:#0D7F70">✅ Sent!</div>
+        <div id="roastGateErr" class="small" style="display:none;margin-top:8px;color:#B3261E">❌ Try again.</div>
       </div>
-      <div id="gateErr" class="small" style="display:none;color:#B3261E;margin-top:8px">❌ Something went wrong — try again.</div>
     </div>
   </section>
 
@@ -194,7 +211,6 @@ label{font-weight:700;margin-bottom:6px;display:block}
       <li>If you submit email, we send your results and may store content you provided to generate them (only if you opt in).</li>
       <li>You can reply “STOP” to any email to delete your data.</li>
     </ul>
-    <p class="small">Coming soon (optional): LinkedIn <b>OAuth sign-in</b> for permitted profile fields with explicit consent. No scraping.</p>
   </section>
 
 </main>
@@ -204,16 +220,82 @@ label{font-weight:700;margin-bottom:6px;display:block}
 </footer>
 
 <script>
-/* ===== Archetypes ===== */
+/* ===== Shared constants ===== */
 const ARCHETYPES = {
   data:{ title:'Data Debris Wrangler', win:['Enrichment + dedupe at lead create','Required fields on stage change'] },
   handoff:{ title:'Handoff Air-Traffic Controller', win:['Round-robin + clear owners','SLA alerts with auto-nudges'] },
   automation:{ title:'Automation Sous-Chef', win:['Consolidate flows into one plate','Add “Next Step” buttons for reps'] },
   forecast:{ title:'Forecast Meteorologist', win:['Stage hygiene gates','Dashboard tiles that actually predict'] }
 };
+// endpoints (fill when live)
+const QUIZ_FORM_ENDPOINT = "";   // e.g. "https://formspree.io/f/xxxxx1"
+const ROAST_FORM_ENDPOINT = "";  // e.g. "https://formspree.io/f/xxxxx2"
 
-/* ===== Playful roast (uses ONLY user-provided text) ===== */
-function buildRoast(spice, arche, bioText, postsText){
+/* ===== QUIZ logic (separate) ===== */
+(function(){
+  const form = document.getElementById('quizForm');
+  const out = document.getElementById('quizOut');
+  const plan = document.getElementById('planOut');
+  const gate = document.getElementById('quizGateForm');
+  const gateBtn = document.getElementById('quizGateBtn');
+  const ok = document.getElementById('quizGateOk');
+  const err = document.getElementById('quizGateErr');
+  let quizResult = null;
+
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const fd = new FormData(form);
+    const picks = ['q1','q2','q3'].map(k=>fd.get(k)).filter(Boolean);
+    if(picks.length<3){ alert('Please answer all questions.'); return; }
+    const tally = picks.reduce((m,v)=>(m[v]=(m[v]||0)+1,m),{});
+    const top = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+    const a = ARCHETYPES[top] || ARCHETYPES.data;
+
+    out.style.display='block';
+    out.innerHTML = `
+      <div class="result">
+        <h4>Your archetype: <span style="color:#0D7F70">${a.title}</span></h4>
+        <p class="small">Best quick wins:</p>
+        <ul>${a.win.map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div>
+    `;
+    plan.style.display='block';
+    plan.innerHTML = `
+      <h3 style="margin-top:0">Your 2-step Mini Plan</h3>
+      <ol style="margin-left:18px">${a.win.map(s=>`<li>${s}</li>`).join('')}</ol>
+      <p class="small">We’ll prove lift in weeks, not quarters.</p>
+    `;
+    quizResult = { archetype:a.title, steps:a.win };
+    try{
+      const stash = JSON.parse(localStorage.getItem('revops_quiz_results')||'[]');
+      stash.push({ts:Date.now(), quizResult});
+      localStorage.setItem('revops_quiz_results', JSON.stringify(stash));
+    }catch(_){}
+  });
+
+  gate.addEventListener('submit', async (e)=>{
+    e.preventDefault(); ok.style.display='none'; err.style.display='none'; gateBtn.disabled=true;
+    const fd = new FormData(gate);
+    if(QUIZ_FORM_ENDPOINT){
+      try{
+        const send = new FormData();
+        send.set('name', fd.get('name')||'');
+        send.set('email', fd.get('email')||'');
+        send.set('archetype', quizResult?.archetype||'');
+        send.set('steps', (quizResult?.steps||[]).join(' | '));
+        const res = await fetch(QUIZ_FORM_ENDPOINT, {method:'POST', body:send, headers:{'Accept':'application/json'}});
+        if(!res.ok) throw new Error('bad');
+        ok.style.display='block';
+      }catch(ex){ err.style.display='block'; }
+    } else {
+      ok.style.display='block'; // demo OK without endpoint
+    }
+    gateBtn.disabled=false;
+  });
+})();
+
+/* ===== Roast builder ===== */
+function buildRoast(spice, archeTitleGuess, bioText, postsText){
   const zings = {
     mild:[
       "You’ve got ‘pipeline whisperer’ energy — now whisper at your fields too.",
@@ -249,161 +331,100 @@ function buildRoast(spice, arche, bioText, postsText){
   return `
     <h3 style="margin-top:0">Playful Roast (${spice||'mild'})</h3>
     <p class="small" style="margin:-6px 0 8px">All in good fun — and 100% opt-in.</p>
-    <ul>
-      <li>${zings[0]}</li><li>${zings[1]}</li><li>${zings[2]}</li>
-    </ul>
+    <ul><li>${zings[0]}</li><li>${zings[1]}</li><li>${zings[2]}</li></ul>
     <p class="small">${hintLine}</p>
-    <p class="small">Archetype read: <b>${ARCHETYPES[arche].title}</b>.</p>
+    ${archeTitleGuess ? `<p class="small">Archetype vibe: <b>${archeTitleGuess}</b>.</p>`:''}
   `;
 }
 
-/* ===== Quiz logic ===== */
+/* ===== Roast logic (completely separate) ===== */
 (function(){
-  const form = document.getElementById('quizForm');
-  const out = document.getElementById('quizOut');
-  if(!form) return;
+  const roastBtn = document.getElementById('roastBtn');
+  const roastOut = document.getElementById('roastOut');
+  const roastGate = document.getElementById('roastGate');
+  const roastGateForm = document.getElementById('roastGateForm');
+  const roastGateBtn = document.getElementById('roastGateBtn');
+  const roastOk = document.getElementById('roastGateOk');
+  const roastErr = document.getElementById('roastGateErr');
+  const roastVideo = document.getElementById('roastVideo');
+  let roastResult = null;
 
-  form.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    // require consent before showing anything meaningful
-    if(!document.getElementById('consent').checked){
-      alert('Please check the consent box to proceed.'); return;
-    }
-    const fd = new FormData(form);
-    const picks = ['q1','q2','q3'].map(k=>fd.get(k)).filter(Boolean);
-    if(picks.length<3){ alert('Please answer all questions.'); return; }
-    const tally = picks.reduce((m,v)=>(m[v]=(m[v]||0)+1,m),{});
-    const top = Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
-    const a = ARCHETYPES[top] || ARCHETYPES.data;
+  roastBtn.addEventListener('click', ()=>{
+    const consent = document.getElementById('consent').checked;
+    if(!consent){ alert('Please check the consent box to proceed.'); return; }
+    const bio = (document.getElementById('liSummary')||{}).value || '';
+    const posts = (document.getElementById('liPosts')||{}).value || '';
+    const spice = (document.getElementById('spice')||{}).value || 'mild';
+    const liUrl = (document.getElementById('liUrl')||{}).value || '';
 
-    out.style.display='block';
-    out.innerHTML = `
-      <div class="result">
-        <h4>Your archetype: <span style="color:#0D7F70">${a.title}</span></h4>
-        <p class="small">Best quick wins:</p>
-        <ul>${a.win.map(x=>`<li>${x}</li>`).join('')}</ul>
-        <p><a href="#results">Scroll for your mini plan + roast ↓</a></p>
-      </div>
-    `;
+    // Light archetype guess from text for flavor only
+    let guess = 'Data Debris Wrangler';
+    if(/routing|handoff|sla/i.test(bio+posts)) guess = 'Handoff Air-Traffic Controller';
+    if(/flow|automation|next step/i.test(bio+posts)) guess = 'Automation Sous-Chef';
+    if(/forecast|stage|predict/i.test(bio+posts)) guess = 'Forecast Meteorologist';
 
-    // render plan & roast preview
-    renderPlanAndRoast(top);
-    document.getElementById('results').scrollIntoView({behavior:'smooth'});
-  });
-})();
+    roastOut.style.display='block';
+    roastOut.innerHTML = buildRoast(spice, guess, bio, posts);
+    roastGate.style.display='block';
 
-/* ===== Render Plan + Roast (from self-provided text) ===== */
-function renderPlanAndRoast(archeKey){
-  const planEl = document.getElementById('planOut');
-  const roastEl = document.getElementById('roastOut');
-  const spice = (document.getElementById('spice')||{}).value || 'mild';
-  const bio = (document.getElementById('liSummary')||{}).value || '';
-  const posts = (document.getElementById('liPosts')||{}).value || '';
+    roastResult = { spice, guess, bio, posts, liUrl, roastText: roastOut.innerText.trim() };
 
-  // plan
-  const steps = ARCHETYPES[archeKey]?.win || ARCHETYPES.data.win;
-  planEl.style.display='block';
-  planEl.innerHTML = `
-    <h3 style="margin-top:0">Your 2-step Mini Plan</h3>
-    <ol style="margin-left:18px">${steps.map(s=>`<li>${s}</li>`).join('')}</ol>
-    <p class="small">We’ll prove lift in weeks, not quarters.</p>
-  `;
-
-  // roast
-  roastEl.style.display='block';
-  roastEl.innerHTML = buildRoast(spice, archeKey, bio, posts);
-
-  // store for email gate
-  window.__revops_result__ = {
-    archetype: ARCHETYPES[archeKey].title,
-    steps, spice, bio, posts,
-    linkedinUrl: (document.getElementById('liUrl')||{}).value || '',
-    roastHtml: roastEl.innerHTML
-  };
-}
-
-/* ===== Email Gate & Download ===== */
-(function(){
-  const form = document.getElementById('gateForm');
-  const btn = document.getElementById('gateBtn');
-  const reveal = document.getElementById('gateReveal');
-  const video = document.getElementById('planVideo');
-  const err = document.getElementById('gateErr');
-  if(!form) return;
-
-  // 1) Add your live endpoint to actually email results:
-  const FORM_ENDPOINT = ""; // e.g., "https://formspree.io/f/xxxxabcd"
-
-  // 2) (Optional) Future LinkedIn OAuth start endpoint (server):
-  const LINKEDIN_OAUTH_START = ""; // e.g., "/api/linkedin-oauth-start"
-
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault(); err.style.display='none'; btn.disabled=true;
-
-    const payload = Object.fromEntries(new FormData(form).entries());
-    const result = window.__revops_result__ || null;
-
-    // local demo stash (kept in browser only)
+    // demo: stash locally
     try{
-      const stash = JSON.parse(localStorage.getItem('crm_hacker_revops_quiz')||'[]');
-      stash.push({ ts:Date.now(), payload, result });
-      localStorage.setItem('crm_hacker_revops_quiz', JSON.stringify(stash));
+      const stash = JSON.parse(localStorage.getItem('revops_roast_results')||'[]');
+      stash.push({ts:Date.now(), roastResult});
+      localStorage.setItem('revops_roast_results', JSON.stringify(stash));
     }catch(_){}
+  });
 
-    // optional: trigger OAuth flow (server-side) if you add it later
-    // if (LINKEDIN_OAUTH_START && result?.linkedinUrl) {
-    //   try { await fetch(LINKEDIN_OAUTH_START, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ profileUrl: result.linkedinUrl, email: payload.email })}); } catch(_){}
-    // }
+  // send roast via email
+  roastGateForm.addEventListener('submit', async (e)=>{
+    e.preventDefault(); roastOk.style.display='none'; roastErr.style.display='none'; roastGateBtn.disabled=true;
+    const fd = new FormData(roastGateForm);
 
-    // live email submit
-    if(FORM_ENDPOINT){
+    if(ROAST_FORM_ENDPOINT){
       try{
-        const fd = new FormData();
-        fd.set('name', payload.name||'');
-        fd.set('email', payload.email||'');
-        fd.set('archetype', result?.archetype || '');
-        fd.set('steps', (result?.steps||[]).join(' | '));
-        fd.set('spice', result?.spice || 'mild');
-        fd.set('bio', result?.bio || '');
-        fd.set('posts', result?.posts || '');
-        fd.set('linkedin_url', result?.linkedinUrl || '');
-        fd.set('roast', result?.roastHtml || '');
-        const res = await fetch(FORM_ENDPOINT, { method:'POST', body:fd, headers:{'Accept':'application/json'} });
+        const send = new FormData();
+        send.set('name', fd.get('name')||'');
+        send.set('email', fd.get('email')||'');
+        send.set('spice', roastResult?.spice||'mild');
+        send.set('archetype_guess', roastResult?.guess||'');
+        send.set('linkedin_url', roastResult?.liUrl||'');
+        send.set('bio', roastResult?.bio||'');
+        send.set('posts', roastResult?.posts||'');
+        send.set('roast', roastResult?.roastText||'');
+        const res = await fetch(ROAST_FORM_ENDPOINT, {method:'POST', body:send, headers:{'Accept':'application/json'}});
         if(!res.ok) throw new Error('bad');
-      }catch(ex){ err.style.display='block'; }
+        roastOk.style.display='block';
+      }catch(ex){ roastErr.style.display='block'; }
+    } else {
+      roastOk.style.display='block'; // demo OK without endpoint
     }
+    roastGateBtn.disabled=false;
+  });
 
-    // optional: pick a different explainer video per archetype
-    const ids = { data:'dQw4w9WgXcQ', handoff:'oHg5SJYRHA0', automation:'dQw4w9WgXcQ', forecast:'oHg5SJYRHA0' };
-    const key = Object.keys(ARCHETYPES).find(k => ARCHETYPES[k].title === (result?.archetype)) || 'data';
-    video.src = `https://www.youtube.com/embed/${ids[key]}?rel=0`;
-
-    reveal.style.display='block';
-    btn.disabled=false;
-
-    // Download
-    document.getElementById('downloadPlan')?.addEventListener('click', ()=>{
-      const lines = [
-        `CRM Hacker — RevOps Roast & Archetype`,
-        `Archetype: ${result?.archetype||'Unknown'}`,
-        ``,
-        `2-Step Mini Plan:`,
-        ...(result?.steps||[]).map(s=>`- ${s}`),
-        ``,
-        `Spice level: ${result?.spice||'mild'}`,
-        `LinkedIn URL (provided): ${result?.linkedinUrl||'(none)'}`,
-        ``,
-        `LinkedIn Bio (provided):`,
-        (result?.bio||'(none)'),
-        ``,
-        `Post snippets (provided):`,
-        (result?.posts||'(none)')
-      ];
-      const blob = new Blob([lines.join('\n')],{type:'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download='CRMHacker-RevOps-Results.txt';
-      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
+  // download roast
+  document.getElementById('downloadRoast').addEventListener('click', ()=>{
+    const r = roastResult || {};
+    const lines = [
+      `CRM Hacker — RevOps Roast`,
+      `Spice: ${r.spice||'mild'}`,
+      `Archetype vibe: ${r.guess||'Unknown'}`,
+      `LinkedIn URL: ${r.liUrl||'(none)'}`,
+      ``,
+      `Roast:`,
+      r.roastText||'(none)',
+      ``,
+      `Bio (provided):`,
+      r.bio||'(none)',
+      ``,
+      `Posts (provided):`,
+      r.posts||'(none)'
+    ];
+    const blob = new Blob([lines.join('\n')],{type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='CRMHacker-RevOps-Roast.txt';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   });
 })();
 </script>
